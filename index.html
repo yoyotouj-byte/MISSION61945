@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MISSION 1945 — Le dossier disparu</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase : chaque bibliothèque est chargée une seule fois -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      ✥
+      <span>
+        <b>MISSION 1945</b>
+        <small>LE DOSSIER DISPARU</small>
+      </span>
+    </div>
+
+    <div class="code">
+      CODE DE LA SALLE
+      <strong id="code">— — — — —</strong>
+    </div>
+
+    <div class="clock">
+      ◷
+      <span>
+        TEMPS RESTANT
+        <strong id="timer">15:00</strong>
+      </span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="panel players">
+      <h3>◉ AGENTS PRÉSENTS <b id="count">0/4</b></h3>
+      <ul id="players"></ul>
+      <p class="signal">● LIAISON SÉCURISÉE</p>
+    </aside>
+
+    <section class="panel mission">
+      <small class="classified">DOCUMENT CONFIDENTIEL · NIVEAU 4</small>
+      <p class="kicker" id="kicker">MISSION 01 — ARCHIVES</p>
+      <h1 id="title">Le krach de Wall Street</h1>
+      <p class="date" id="date">29 OCTOBRE 1929</p>
+
+      <hr>
+
+      <div class="artifact">
+        <small id="artifactType">PIÈCE À EXAMINER</small>
+        <p id="artifact"></p>
+      </div>
+
+      <p class="question" id="question"></p>
+      <div id="answers"></div>
+
+      <p id="penalty" class="penalty">
+        ERREURS : 0 · −20 SEC / ERREUR
+      </p>
+
+      <p id="feedback" aria-live="polite"></p>
+      <p id="hint"></p>
+
+      <div class="actions">
+        <button id="hintBtn">☼ Obtenir un indice</button>
+        <button id="nextBtn" class="gold" hidden>
+          Continuer la mission →
+        </button>
+      </div>
+    </section>
+
+    <aside class="panel intel">
+      <h3>✦ TRANSMISSION</h3>
+      <small>MESSAGE INTERCEPTÉ</small>
+
+      <blockquote id="radio">
+        « Agent, le dossier a été déplacé.
+        Résolvez les énigmes pour retrouver sa trace. »
+      </blockquote>
+
+      <div class="wave">▂ ▅ ▃ ▇ ▄ ▆ ▂ ▅ ▃ ▇ ▄ ▆</div>
+
+      <p>FRÉQUENCE <b>87.6 MHz</b></p>
+      <p>STATUT <b id="status">EN ATTENTE</b></p>
+    </aside>
+
+    <section class="panel lobby" id="lobby">
+      <small class="classified">CENTRE DE COMMANDEMENT</small>
+      <h2>Préparez votre équipe, agent.</h2>
+      <p>Créez une salle ou rejoignez une salle avec son code.</p>
+
+      <label>CHOISISSEZ VOTRE SALLE</label>
+
+      <div class="room-picker">
+        <label class="room-card">
+          <input
+            type="radio"
+            name="roomTheme"
+            value="archives"
+            checked
+          >
+          <span>🗺️ SALLE 1 — LES ARCHIVES</span>
+          <small>Bureau de renseignement · documents et codes</small>
+        </label>
+
+        <label class="room-card">
+          <input
+            type="radio"
+            name="roomTheme"
+            value="bunker"
+          >
+          <span>⚓ SALLE 2 — LE BUNKER</span>
+          <small>Centre de commandement · transmissions et stratégie</small>
+        </label>
+      </div>
+
+      <label for="name">NOM DE CODE</label>
+      <input
+        id="name"
+        maxlength="18"
+        value="Agent local"
+        placeholder="Ex. : Shadow"
+      >
+
+      <button class="gold wide" id="create">
+        ＋ Créer une salle
+      </button>
+
+      <div class="join">
+        <input
+          id="joinCode"
+          maxlength="5"
+          placeholder="CODE"
+          aria-label="Code de la salle à rejoindre"
+        >
+        <button id="join">Rejoindre</button>
+      </div>
+
+      <small class="note">
+        Les fonctions multijoueur en ligne nécessitent une configuration
+        Firebase et des règles de sécurité adaptées.
+</small>
+    </section>
+  </main>
+
+  <footer>
+    <span id="progress">MISSION 1 SUR 4</span>
+
+    <div class="track">
+      <i id="fill"></i>
+    </div>
+
+    <small>✦ OPÉRATION HISTORIQUE · ACCÈS RESTREINT</small>
+    <button id="exit">↗️ Quitter la salle</button>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Le JavaScript du jeu est chargé une seule fois, après le HTML -->
+  <script src="app.js"></script>
+</body>
+</html>
